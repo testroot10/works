@@ -1,0 +1,44 @@
+You have a folder with your .exe and all dependencies. You are using a Visual Studio Developer Command Prompt (so mage.exe is in PATH). Replace MyApp and version numbers as needed.
+
+📌 1. Navigate to Your Application Folder
+cmd
+cd C:\Path\To\YourAppFolder
+🔑 2. Create a Test Certificate (self‑signed)
+cmd
+mage -New TestCertificate -ToFile TestCert.pfx -Password MyTestPass123
+📄 3. Generate the Application Manifest (.manifest)
+cmd
+mage -New Application -ToFile MyApp.exe.manifest -Name "My Application" -Version 1.0.0.0 -FromDirectory .
+🚀 4. Generate the Deployment Manifest (.application)
+cmd
+mage -New Deployment -ToFile MyApp.application -Name "My Application" -Version 1.0.0.0 -AppManifest MyApp.exe.manifest
+✍️ 5. Sign Both Manifests with the Test Certificate
+cmd
+mage -Sign MyApp.exe.manifest -CertFile TestCert.pfx -Password MyTestPass123
+mage -Sign MyApp.application -CertFile TestCert.pfx -Password MyTestPass123
+✅ 6. Verify the Output
+You should now see:
+
+MyApp.application – the main installer file
+
+MyApp.exe.manifest – the application manifest
+
+TestCert.pfx – your test certificate (keep it for future builds)
+
+All your original application files (.exe, .dll, etc.)
+
+📦 Optional: Clean Up Unnecessary Files
+If you don’t need the certificate file for other commands, you can leave it; otherwise:
+
+cmd
+del TestCert.pfx
+⚠️ Important Notes
+For .NET Core / 5+ projects use dotnet-mage instead. Install it once:
+dotnet tool install --global dotnet-mage
+Then replace mage with dotnet-mage in all commands above.
+
+The test certificate will trigger a security warning when users install the app. For real distribution, replace with a trusted code‑signing certificate.
+
+The -FromDirectory . command includes every file in the current folder. Make sure only necessary files are present.
+
+Run these commands in order, and you’ll have a fully built and signed ClickOnce installer.
